@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:pt="jakarta.faces.passthrough">
+<h:head>
+    <title>WebSocket Chat</title>
+</h:head>
+<h:body>
+    <h1>Chatt för inloggad användare: #{loginBean.loggedInUser.username}</h1>
+
+    <div id="chatWindow" style="border: 1px solid #ccc; height: 300px; overflow-y: scroll; padding: 10px; margin-bottom: 10px;">
+    </div>
+
+    <h:panelGrid columns="2">
+        <input type="text" id="messageInput" pt:placeholder="Skriv ett meddelande..." style="width: 250px;" />
+        <button onclick="sendMessage(); return false;">Skicka</button>
+    </h:panelGrid>
+
+    <hr />
+    <h:form>
+        <h:commandLink value="Logga ut" action="#{loginBean.logout}" />
+    </h:form>
+
+    <script type="text/javascript">
+        var wsUrl = "ws://localhost:8080/websocket-server/chat";
+        var websocket = new WebSocket(wsUrl);
+
+        websocket.onmessage = function(event) {
+            var chatWindow = document.getElementById("chatWindow");
+            var message = document.createElement("div");
+            message.textContent = event.data;
+            chatWindow.appendChild(message);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        };
+
+        function sendMessage() {
+            var input = document.getElementById("messageInput");
+            var username = "#{loginBean.loggedInUser.username}";
+            var message = username + ": " + input.value;
+            
+            if (input.value !== "") {
+                websocket.send(message);
+                input.value = "";
+            }
+        }
+
+        websocket.onerror = function(event) {
+            console.error("WebSocket fel: ", event);
+        };
+    </script>
+</h:body>
+</html>

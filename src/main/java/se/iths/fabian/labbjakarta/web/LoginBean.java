@@ -26,7 +26,7 @@ public class LoginBean implements Serializable {
 
         if (user != null) {
             this.loggedInUser = user;
-            return "appusers.xhtml?faces-redirect=true";
+            return "chat.xhtml?faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Inloggning misslyckades", "Fel användarnamn eller lösenord"));
