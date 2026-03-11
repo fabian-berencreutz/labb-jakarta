@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+<h:head>
+    <title>Inloggning</title>
+</h:head>
+<h:body>
+    <h1>Vänligen logga in</h1>
+
+    <h:form id="loginForm">
+        <h:messages globalOnly="true" style="color: red;" />
+        <h:panelGrid columns="2">
+            <h:outputLabel value="Användarnamn:" for="username" />
+            <h:inputText id="username" value="#{loginBean.username}" required="true" />
+
+            <h:outputLabel value="Lösenord:" for="password" />
+            <h:inputSecret id="password" value="#{loginBean.password}" required="true" />
+
+            <h:commandButton value="Logga in" action="#{loginBean.login}" />
+        </h:panelGrid>
+    </h:form>
+
+    <hr />
+    <h:link value="Skapa ny användare här" outcome="appusers" />
+</h:body>
+</html>

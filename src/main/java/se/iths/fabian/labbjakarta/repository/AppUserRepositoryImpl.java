@@ -27,4 +27,15 @@ public class AppUserRepositoryImpl implements AppUserRepository{
     public List<AppUser> findAll() {
         return entityManager.createQuery("SELECT u FROM AppUser u", AppUser.class).getResultList();
     }
+
+    @Override
+    public AppUser findByUsername(String username) {
+        try {
+            return entityManager.createQuery("SELECT u FROM AppUser u WHERE u.username = :username", AppUser.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

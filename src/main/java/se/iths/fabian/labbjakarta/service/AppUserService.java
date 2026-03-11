@@ -27,4 +27,17 @@ public class AppUserService {
         logger.info("Hämtar alla användare från databasen.");
         return appUserRepository.findAll();
     }
+
+    public AppUser login(String username, String password) {
+        logger.info("Inloggningsförsök för användare: " + username);
+        AppUser user = appUserRepository.findByUsername(username);
+
+        if (user != null && user.getPassword().equals(password)) {
+            logger.info("Inloggning lyckades för: " + username);
+            return user;
+        }
+
+        logger.warning("Misslyckat inloggningsförsök för: " + username);
+        return null;
+    }
 }
