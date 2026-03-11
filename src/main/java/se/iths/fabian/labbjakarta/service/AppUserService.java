@@ -1,4 +1,4 @@
-package se.iths.fabian.labbjakarta;
+package se.iths.fabian.labbjakarta.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
